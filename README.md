@@ -8,9 +8,13 @@ Windows (Windows Forms)
 Using the application is very intuitive. For more information please visit: https://www.vt-soft.com/sbr-simple-break-reminder-manual
 
 ## Screenshots
-![sbr-simple-break-reminder-01](https://github.com/user-attachments/assets/a4084332-e63b-48d6-8803-0c00e72a5cff)
+<img width="1000" height="540" alt="sbr-simple-break-reminder-01" src="https://github.com/user-attachments/assets/6e1d9429-2d0c-4016-b827-bef85ac98796" />
 
-![sbr-simple-break-reminder-04](https://github.com/user-attachments/assets/737c0e96-1020-452d-b97d-6b241edc2a06)
+<img width="1000" height="540" alt="sbr-simple-break-reminder-03" src="https://github.com/user-attachments/assets/6f1ce419-be9b-4bd9-92c6-445c1c275d1e" />
+
+<img width="1000" height="540" alt="sbr-simple-break-reminder-04" src="https://github.com/user-attachments/assets/303173bd-beb2-4cc5-95a1-806c78a6024c" />
+
+
 
 
 ## Features
@@ -19,7 +23,6 @@ Using the application is very intuitive. For more information please visit: http
 * Statistics (daily and annual statistics)
 * Idle time
 * Day/night mode
-* ToDo manager
 
 # Known issues
  * No known issues so far :)
