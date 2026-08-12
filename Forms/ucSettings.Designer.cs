@@ -38,6 +38,7 @@
             lblAlarm3 = new Label();
             lblAlarm1 = new Label();
             pnlSettings = new Panel();
+            chkSystemTray = new CheckBox();
             chkPomoLongBreak = new CheckBox();
             rdoS3 = new RadioButton();
             rdoS2 = new RadioButton();
@@ -92,13 +93,13 @@
             pnlAlarm.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
             pnlAlarm.Location = new Point(30, 30);
             pnlAlarm.Name = "pnlAlarm";
-            pnlAlarm.Size = new Size(275, 181);
+            pnlAlarm.Size = new Size(275, 221);
             pnlAlarm.TabIndex = 0;
             pnlAlarm.TabStop = true;
             // 
             // nudAlarm4
             // 
-            nudAlarm4.Location = new Point(199, 140);
+            nudAlarm4.Location = new Point(201, 140);
             nudAlarm4.Maximum = new decimal(new int[] { 55, 0, 0, 0 });
             nudAlarm4.Name = "nudAlarm4";
             nudAlarm4.Size = new Size(40, 25);
@@ -106,7 +107,7 @@
             // 
             // nudAlarm3
             // 
-            nudAlarm3.Location = new Point(199, 100);
+            nudAlarm3.Location = new Point(201, 100);
             nudAlarm3.Maximum = new decimal(new int[] { 55, 0, 0, 0 });
             nudAlarm3.Name = "nudAlarm3";
             nudAlarm3.Size = new Size(40, 25);
@@ -114,7 +115,7 @@
             // 
             // nudAlarm2
             // 
-            nudAlarm2.Location = new Point(199, 60);
+            nudAlarm2.Location = new Point(201, 60);
             nudAlarm2.Maximum = new decimal(new int[] { 55, 0, 0, 0 });
             nudAlarm2.Name = "nudAlarm2";
             nudAlarm2.Size = new Size(40, 25);
@@ -122,7 +123,7 @@
             // 
             // nudAlarm1
             // 
-            nudAlarm1.Location = new Point(199, 20);
+            nudAlarm1.Location = new Point(201, 20);
             nudAlarm1.Maximum = new decimal(new int[] { 55, 0, 0, 0 });
             nudAlarm1.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
             nudAlarm1.Name = "nudAlarm1";
@@ -133,7 +134,7 @@
             // lblAlarm4
             // 
             lblAlarm4.AutoSize = true;
-            lblAlarm4.Location = new Point(23, 142);
+            lblAlarm4.Location = new Point(22, 142);
             lblAlarm4.Name = "lblAlarm4";
             lblAlarm4.Size = new Size(133, 17);
             lblAlarm4.TabIndex = 0;
@@ -142,7 +143,7 @@
             // lblAlarm2
             // 
             lblAlarm2.AutoSize = true;
-            lblAlarm2.Location = new Point(23, 62);
+            lblAlarm2.Location = new Point(22, 62);
             lblAlarm2.Name = "lblAlarm2";
             lblAlarm2.Size = new Size(133, 17);
             lblAlarm2.TabIndex = 0;
@@ -151,7 +152,7 @@
             // lblAlarm3
             // 
             lblAlarm3.AutoSize = true;
-            lblAlarm3.Location = new Point(23, 102);
+            lblAlarm3.Location = new Point(22, 102);
             lblAlarm3.Name = "lblAlarm3";
             lblAlarm3.Size = new Size(133, 17);
             lblAlarm3.TabIndex = 0;
@@ -160,7 +161,7 @@
             // lblAlarm1
             // 
             lblAlarm1.AutoSize = true;
-            lblAlarm1.Location = new Point(23, 22);
+            lblAlarm1.Location = new Point(22, 22);
             lblAlarm1.Name = "lblAlarm1";
             lblAlarm1.Size = new Size(133, 17);
             lblAlarm1.TabIndex = 0;
@@ -169,6 +170,7 @@
             // pnlSettings
             // 
             pnlSettings.BorderStyle = BorderStyle.FixedSingle;
+            pnlSettings.Controls.Add(chkSystemTray);
             pnlSettings.Controls.Add(chkPomoLongBreak);
             pnlSettings.Controls.Add(rdoS3);
             pnlSettings.Controls.Add(rdoS2);
@@ -177,16 +179,27 @@
             pnlSettings.Controls.Add(chkEmoticons);
             pnlSettings.Controls.Add(chkPlaySound);
             pnlSettings.Controls.Add(chkStartUp);
-            pnlSettings.Location = new Point(330, 30);
+            pnlSettings.Location = new Point(328, 30);
             pnlSettings.Name = "pnlSettings";
-            pnlSettings.Size = new Size(466, 181);
+            pnlSettings.Size = new Size(468, 221);
             pnlSettings.TabIndex = 1;
             pnlSettings.TabStop = true;
+            // 
+            // chkSystemTray
+            // 
+            chkSystemTray.AutoSize = true;
+            chkSystemTray.BackColor = SystemColors.Control;
+            chkSystemTray.Location = new Point(21, 62);
+            chkSystemTray.Name = "chkSystemTray";
+            chkSystemTray.Size = new Size(212, 21);
+            chkSystemTray.TabIndex = 3;
+            chkSystemTray.Text = "***Show app icon in system tray";
+            chkSystemTray.UseVisualStyleBackColor = false;
             // 
             // chkPomoLongBreak
             // 
             chkPomoLongBreak.AutoSize = true;
-            chkPomoLongBreak.Location = new Point(180, 141);
+            chkPomoLongBreak.Location = new Point(199, 181);
             chkPomoLongBreak.Name = "chkPomoLongBreak";
             chkPomoLongBreak.Size = new Size(189, 21);
             chkPomoLongBreak.TabIndex = 8;
@@ -196,7 +209,7 @@
             // rdoS3
             // 
             rdoS3.AutoSize = true;
-            rdoS3.Location = new Point(290, 60);
+            rdoS3.Location = new Point(300, 100);
             rdoS3.Name = "rdoS3";
             rdoS3.Size = new Size(40, 21);
             rdoS3.TabIndex = 7;
@@ -207,7 +220,7 @@
             // rdoS2
             // 
             rdoS2.AutoSize = true;
-            rdoS2.Location = new Point(241, 60);
+            rdoS2.Location = new Point(251, 100);
             rdoS2.Name = "rdoS2";
             rdoS2.Size = new Size(40, 21);
             rdoS2.TabIndex = 6;
@@ -218,7 +231,7 @@
             // rdoS1
             // 
             rdoS1.AutoSize = true;
-            rdoS1.Location = new Point(189, 60);
+            rdoS1.Location = new Point(199, 100);
             rdoS1.Name = "rdoS1";
             rdoS1.Size = new Size(40, 21);
             rdoS1.TabIndex = 5;
@@ -229,7 +242,7 @@
             // chkPomodoro
             // 
             chkPomodoro.AutoSize = true;
-            chkPomodoro.Location = new Point(21, 142);
+            chkPomodoro.Location = new Point(21, 182);
             chkPomodoro.Name = "chkPomodoro";
             chkPomodoro.Size = new Size(128, 21);
             chkPomodoro.TabIndex = 4;
@@ -239,7 +252,7 @@
             // chkEmoticons
             // 
             chkEmoticons.AutoSize = true;
-            chkEmoticons.Location = new Point(21, 102);
+            chkEmoticons.Location = new Point(21, 142);
             chkEmoticons.Name = "chkEmoticons";
             chkEmoticons.Size = new Size(146, 21);
             chkEmoticons.TabIndex = 3;
@@ -249,7 +262,7 @@
             // chkPlaySound
             // 
             chkPlaySound.AutoSize = true;
-            chkPlaySound.Location = new Point(21, 62);
+            chkPlaySound.Location = new Point(21, 102);
             chkPlaySound.Name = "chkPlaySound";
             chkPlaySound.Size = new Size(116, 21);
             chkPlaySound.TabIndex = 2;
@@ -290,7 +303,7 @@
             pnlColors.Controls.Add(pnlBlue);
             pnlColors.Controls.Add(pnlGreen);
             pnlColors.Controls.Add(pnlRed);
-            pnlColors.Location = new Point(30, 237);
+            pnlColors.Location = new Point(30, 272);
             pnlColors.Name = "pnlColors";
             pnlColors.Size = new Size(766, 174);
             pnlColors.TabIndex = 2;
@@ -576,5 +589,6 @@
         public Panel pnlSettings;
         public Panel pnlColors;
         private CheckBox chkPomoLongBreak;
+        private CheckBox chkSystemTray;
     }
 }

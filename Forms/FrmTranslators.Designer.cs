@@ -32,12 +32,14 @@ namespace SBR.Forms
             llbLink = new LinkLabel();
             btnCancel = new Button();
             lblText = new Label();
+            pictureBox1 = new PictureBox();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // llbLink
             // 
             llbLink.AutoSize = true;
-            llbLink.Location = new Point(39, 132);
+            llbLink.Location = new Point(22, 128);
             llbLink.Name = "llbLink";
             llbLink.Size = new Size(60, 15);
             llbLink.TabIndex = 1;
@@ -47,7 +49,7 @@ namespace SBR.Forms
             // 
             // btnCancel
             // 
-            btnCancel.Location = new Point(400, 128);
+            btnCancel.Location = new Point(414, 125);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(75, 23);
             btnCancel.TabIndex = 2;
@@ -58,17 +60,26 @@ namespace SBR.Forms
             // lblText
             // 
             lblText.AutoSize = true;
-            lblText.Location = new Point(39, 21);
+            lblText.Location = new Point(65, 22);
             lblText.Name = "lblText";
             lblText.Size = new Size(38, 15);
             lblText.TabIndex = 0;
             lblText.Text = "label1";
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(20, 21);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(36, 36);
+            pictureBox1.TabIndex = 3;
+            pictureBox1.TabStop = false;
+            // 
             // FrmTranslators
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(487, 159);
+            ClientSize = new Size(504, 159);
+            Controls.Add(pictureBox1);
             Controls.Add(lblText);
             Controls.Add(btnCancel);
             Controls.Add(llbLink);
@@ -78,6 +89,7 @@ namespace SBR.Forms
             Name = "FrmTranslators";
             ShowIcon = false;
             Text = "Looking for translators";
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -91,5 +103,6 @@ namespace SBR.Forms
         private LinkLabel llbLink;
         private Button btnCancel;
         private Label lblText;
+        private PictureBox pictureBox1;
     }
 }

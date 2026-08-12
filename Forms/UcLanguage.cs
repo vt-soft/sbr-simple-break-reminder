@@ -1,32 +1,38 @@
-﻿using System;
+﻿using Microsoft.Win32.SafeHandles;
+using SBR;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net;
+using System.Resources;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
-using System.Resources;
-using Microsoft.Win32.SafeHandles;
-using SBR;
-using System.Diagnostics;
 using static System.Windows.Forms.LinkLabel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace SBR.Forms
 {
     public partial class UcLanguage : UserControl
     {
-        private List<CreditsInfo> creditList;
-        private FrmTranslators myForm;
+        // Here data from _credits_info.json will be stored.
+        private List<CreditsInfo> creditList = new(); 
 
+        private FrmTranslators myForm;
         public UcLanguage()
         {
             InitializeComponent();
+           
+            LoadJsonCreditsInfoFile();
+            UpdateComboBoxWithLanguages();
+            PopulatePanelWithCredits();
+
             EventHandlersInit();
-            DataInit();
         }
 
         // ********************************************************************************************************************
@@ -40,8 +46,8 @@ namespace SBR.Forms
         {
             // List of strings which are in current User Control (Windows Form) and which we want to change to different language.
             // There is such method in each User Control (Windows Form) which is called from LangChanger static class.
-            lblSelectLanguage.Text = LangChanger.GetString("Select your language:");
-            lblCredits.Text = LangChanger.GetString("Credits:");
+            lblSelectLanguage.Text = LangManager.GetString("select_lang");
+            lblCredits.Text = LangManager.GetString("credits");
         }
 
 
@@ -56,24 +62,70 @@ namespace SBR.Forms
             btnMissingLanguage.Click += btnMissingLanguage_Click;
         }
 
-        private void DataInit()
+
+        /// <summary>
+        /// Load _sbr_credits_info.json file and populate the creditList
+        /// </summary>
+        private void LoadJsonCreditsInfoFile()
         {
-            creditList = new List<CreditsInfo>();
-            FillCreditList();
-            PopulatePanelWithCredits();
+            try
+            {
+                // Construct the path to the file _sbr_credits_info.json
+                string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                string jsonFilePath = Path.Combine(appDirectory, "Languages", "_sbr_credits_info.json");
+
+                // Check if file exists
+                if (!File.Exists(jsonFilePath))
+                {
+                    MessageBox.Show($"File not found: {jsonFilePath}");
+                    return;
+                }
+
+                // Read the JSON file
+                string jsonContent = File.ReadAllText(jsonFilePath);
+
+                // Parse JSON and extract id and translated_string
+                using (JsonDocument doc = JsonDocument.Parse(jsonContent))
+                {
+                    JsonElement root = doc.RootElement;
+
+                    // Handle if root is an array
+                    if (root.ValueKind == JsonValueKind.Array)
+                    {
+                        foreach (JsonElement item in root.EnumerateArray())
+                        {
+                            if (item.TryGetProperty("language_code", out JsonElement lcElement) &&
+                                item.TryGetProperty("country_language", out JsonElement clElement) &&
+                                item.TryGetProperty("name", out JsonElement nameElement) &&
+                                item.TryGetProperty("hyper_link_url", out JsonElement hlElementUrl) &&
+                                item.TryGetProperty("hyper_link_text", out JsonElement hlElementText))
+                            {
+                                string languageCode = lcElement.GetString();
+                                string countryLanguage = clElement.GetString();
+                                string name = nameElement.GetString();
+                                string hyperLinkUrl = hlElementUrl.GetString();
+                                string hyperLinkText = hlElementText.GetString();
+
+                                creditList.Add(new CreditsInfo
+                                {
+                                    LanguageCode = languageCode,
+                                    CountryLanguage = countryLanguage,
+                                    Name = name,
+                                    HyperLinkUrl = hyperLinkUrl,
+                                    HyperLinkText = hyperLinkText
+                                });
+
+                            }
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error reading JSON file: {ex.Message}");
+            }
         }
-
-
-      
-        private void UcLanguage_Load(object sender, EventArgs e)
-        {
-            // We can't call UpdateComboBoxWithLanguages() method in the constructor because it will:
-            // immediately call cboLanguages_SelectedIndexChanged()
-            // which will immediately call LangChanger.ChangeLangCode(credit.LanguageCode);
-            // which will FAIL because LangChanger.Init() is not yet initialized.  
-            UpdateComboBoxWithLanguages();
-        }
-
 
         /// <summary>
         /// Method will populate pnlTableLang with flags, credits and hyperlinks.
@@ -82,19 +134,83 @@ namespace SBR.Forms
         {
             pnlTableLang.Controls.Clear();
             pnlTableLang.RowCount = 0;
-            string translator = "";
+
             Image flag = null;
 
             for (int i = 0; i < creditList.Count; i++)
             {
                 flag = FindFlag(creditList[i].LanguageCode);
-                translator = String.Format($"{creditList[i].Language + "\n" + creditList[i].Translator}");
-                LinkLabel linkLabel = CreateLinkLabel(i);
+                int flagWidth = flag != null ? flag.Width : 0;
+                int flagHeight = flag != null ? flag.Height : 0;
 
-                // Add controls to the panel.   
-                pnlTableLang.Controls.Add(new PictureBox() { Image = flag, Height = 30, SizeMode = PictureBoxSizeMode.Zoom, BorderStyle = BorderStyle.None }, 0, pnlTableLang.RowCount);
-                pnlTableLang.Controls.Add(new Label() { Text = translator, Width = 400, Height = 35, Font = new Font("Segoe UI", 9.75f) }, 1, pnlTableLang.RowCount);
-                pnlTableLang.Controls.Add(linkLabel, 2, pnlTableLang.RowCount);
+                // Create PictureBox for flag (left-aligned)
+                PictureBox pictureBox = new PictureBox
+                {
+                    Image = flag,
+                    Height = (flagHeight - 2) * 2 / 3, // flags are too big, so we scale them down to 2/3 of their original height
+                    Width = (flagWidth - 2) * 2 / 3,
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    Anchor = AnchorStyles.Left | AnchorStyles.Top,
+                };
+
+                // Create RichTextBox
+                RichTextBox richTextBox = new RichTextBox
+                {
+                    Width = 650,
+                    Height = 50,
+                    ReadOnly = true,
+                    BorderStyle = BorderStyle.None,
+                    BackColor = SystemColors.Control,
+                    Font = new Font("Segoe UI", 9.75f),
+                    Cursor = Cursors.Default,
+                    DetectUrls = true
+                };
+
+                // Build the text with country language, name, and link
+                richTextBox.Text = $"{creditList[i].CountryLanguage}\n{creditList[i].Name} | ";
+
+                int linkStart = richTextBox.Text.Length;
+                string linkUrl = creditList[i].HyperLinkUrl;
+                string linkDisplayText = creditList[i].HyperLinkText;
+
+                // Append the display text
+                richTextBox.AppendText(linkDisplayText);
+                richTextBox.Select(linkStart, linkDisplayText.Length);
+                richTextBox.SelectionFont = new Font("Segoe UI", 9.75f, FontStyle.Underline);
+
+                Color linkColor = ControlPaint.Light(SystemColors.ControlText, 0.7f);
+                richTextBox.SelectionColor = linkColor;
+                richTextBox.DeselectAll();
+
+                // Handle link click
+                richTextBox.MouseClick += (sender, e) =>
+                {
+                    // Check if click is within the link text
+                    int clickPosition = richTextBox.GetCharIndexFromPosition(e.Location);
+                    if (clickPosition >= linkStart && clickPosition < linkStart + linkDisplayText.Length)
+                    {
+                        if (!string.IsNullOrEmpty(linkUrl))
+                        {
+                            try
+                            {
+                                var psi = new ProcessStartInfo
+                                {
+                                    FileName = linkUrl,
+                                    UseShellExecute = true
+                                };
+                                Process.Start(psi);
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show($"Could not open link: {ex.Message}");
+                            }
+                        }
+                    }
+                };
+
+                // Add controls to the TableLayoutPanel
+                pnlTableLang.Controls.Add(pictureBox, 0, pnlTableLang.RowCount);
+                pnlTableLang.Controls.Add(richTextBox, 1, pnlTableLang.RowCount);
 
                 // No need to run rest of this code for last item, otherwise it will create extra blank table.
                 if (i == (creditList.Count - 1)) break;
@@ -108,7 +224,7 @@ namespace SBR.Forms
                 // Increase height of the panel.     
                 if (pnlTableLang.Height <= 280)
                 {
-                    pnlTableLang.Height += 42;
+                    pnlTableLang.Height += 70;  // Increased from 55 to 70
                 }
             }
 
@@ -117,141 +233,49 @@ namespace SBR.Forms
             pnlTableLang.Padding = new Padding(0, 0, vertScrollWidth, 0);
         }
 
+        
         /// <summary>
-        /// Method will create LinkLabel with hyperlink.
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        private LinkLabel CreateLinkLabel(int i)
-        {
-            Color linkColor = ControlPaint.Light(SystemColors.ControlText, 0.7f);
-
-            // Hyperlink
-            var linkLabel = new LinkLabel
-            {
-                Text = creditList[i].HyperLink,
-                Width = 200,
-                Height = 35,
-                Tag = creditList[i].HyperLink,
-                Font = new Font("Segoe UI", 9.75f, FontStyle.Underline),
-
-                LinkColor = linkColor,
-                ActiveLinkColor = linkColor,
-                VisitedLinkColor = linkColor,
-                ForeColor = linkColor,
-                BackColor = SystemColors.Control,
-                LinkBehavior = LinkBehavior.HoverUnderline,
-            };
-
-            // Hyperlink - event handler.
-            linkLabel.LinkClicked += (sender, e) =>
-            {
-                var link = (sender as LinkLabel)?.Tag as string;
-                if (!string.IsNullOrEmpty(link))
-                {
-                    var psi = new ProcessStartInfo
-                    {
-                        FileName = link,
-                        UseShellExecute = true
-                    };
-                    Process.Start(psi);
-                }
-            };
-            return linkLabel;
-        }
-
-        /// <summary>
-        /// Method will find flag by language code.
+        /// Method will find flag (from resources) by language code.
         /// </summary>
         /// <param name="languageCode"></param>
         /// <returns></returns>
         private Image FindFlag(string languageCode)
         {
-            switch (languageCode)
+            if (string.IsNullOrEmpty(languageCode))
+                return ResourcesFlagsDir.ResourcesFlags.empty_flag;
+
+            // Convert language code format from "xx-xx" to "xx_xx"
+            string flagName = languageCode.Replace("-", "_").ToLower();
+
+            // Use reflection to get the property dynamically from ResourcesFlagsDir.ResourcesFlags
+            var flagsType = typeof(ResourcesFlagsDir.ResourcesFlags);
+            var property = flagsType.GetProperty(flagName,
+                System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static);
+
+            if (property != null && property.CanRead)
             {
-                case "en-gb":
-                    return ResourcesFlagsDir.ResourcesFlags.en_gb;
-                case "de-de":
-                    return ResourcesFlagsDir.ResourcesFlags.de_de;
-                case "el-gr":
-                    return ResourcesFlagsDir.ResourcesFlags.el_gr;
-                case "cs-cz":
-                    return ResourcesFlagsDir.ResourcesFlags.cs_cz;
-                //case "es-es":
-                //    return ResourcesFlagsDir.ResourcesFlags.es_es;
-                //case "pt-pt":
-                //    return ResourcesFlagsDir.ResourcesFlags.pt_pt;
-                //case "fr-fr":
-                //    return ResourcesFlagsDir.ResourcesFlags.fr_fr;
-                //case "it-it":
-                //    return ResourcesFlagsDir.ResourcesFlags.it_it;
-                //case "ko-kr":
-                //    return ResourcesFlagsDir.ResourcesFlags.ko_kr;
-                //case "ru-ru":
-                //    return ResourcesFlagsDir.ResourcesFlags.ru_ru;
-                //case "zh-cn":
-                //    return ResourcesFlagsDir.ResourcesFlags.zh_cn;
-                default:
-                    return null;
+                var flagImage = property.GetValue(null) as Image;
+                return flagImage ?? ResourcesFlagsDir.ResourcesFlags.empty_flag;
             }
+
+            return ResourcesFlagsDir.ResourcesFlags.empty_flag;
         }
 
-        /// <summary>
-        /// Method will fill creditList with data.
-        /// </summary>
-        private void FillCreditList()
-        {
-
-            creditList.Add(new CreditsInfo()
-            {
-                LanguageCode = "en-gb",
-                Language = "Britain - English",
-                Translator = "British translation agency",
-                HyperLink = "www.google.com"
-            });
-
-            creditList.Add(new CreditsInfo()
-            {
-                LanguageCode = "de-de",
-                Language = "Germany - Deutsch",
-                Translator = "German translation agency",
-                HyperLink = "www.google.com",
-            });
-
-            creditList.Add(new CreditsInfo()
-            {
-                LanguageCode = "el-gr",
-                Language = "Greek - Dελληνικά",
-                Translator = "Greek translation agency",
-                HyperLink = "www.seznam.cz"
-            });
-
-            creditList.Add(new CreditsInfo()
-            {
-                LanguageCode = "cs-cz",
-                Language = "Cestina",
-                Translator = "Cesky prekladatel",
-                HyperLink = "www.seznam.cz"
-            });
-
-
-
-        }
 
         /// <summary>
         /// Method will update combobox with languages (from creditList).
         /// </summary>
         private void UpdateComboBoxWithLanguages()
         {
+     
             cboLanguages.Items.Clear();
             foreach (var credit in creditList)
             {
-                cboLanguages.Items.Add(credit.Language);
+                cboLanguages.Items.Add(credit.CountryLanguage);
             }
 
             //Sort the list of languages in the combobox alphabetically.
             cboLanguages.Sorted = true;
-
 
             // Change the selected language in the combobox to the current language of the application.
             // This part is here because after we load setting file we want to have the correct language selected in the combobox.
@@ -259,8 +283,12 @@ namespace SBR.Forms
 
             if (!string.IsNullOrEmpty(langCode))
             {
-                cboLanguages.SelectedItem = creditList.FirstOrDefault(c => c.LanguageCode == langCode)?.Language;
+                cboLanguages.SelectedItem = creditList.FirstOrDefault(c => c.LanguageCode == langCode)?.CountryLanguage;
             }
+
+            // Set picture box to the flag of the selected language in the combobox.
+            picFlag.Image = FindFlag(creditList.FirstOrDefault(c => c.CountryLanguage == cboLanguages.SelectedItem?.ToString())?.LanguageCode);
+
         }
 
         /// <summary>
@@ -276,23 +304,22 @@ namespace SBR.Forms
                 string selectedLanguage = cboLanguages.SelectedItem.ToString();
                 foreach (var credit in creditList)
                 {
-                    if (credit.Language == selectedLanguage)
+                    if (credit.CountryLanguage == selectedLanguage)
                     {
                         // Change the flag image.
                         picFlag.Image = FindFlag(credit.LanguageCode);
 
-                        Debug.Print("Volame zmenu jazyka: " + selectedLanguage);
-
                         // Change the language in the application.
-                        LangChanger.ChangeLangCode(credit.LanguageCode);
+                        LangManager.SetLanguage(credit.LanguageCode);
 
-                        // hange the languageCode in the settings file.
+                        // Change the languageCode in the settings file.
                         MainForm.MainFormInstance.cData.LanguageCode = credit.LanguageCode;
                         break;
                     }
                 }
             }
         }
+
 
         /// <summary>
         /// Method will open FrmTranslators form.
@@ -308,6 +335,7 @@ namespace SBR.Forms
                 myForm.FormClosed += (s, args) => myForm = null; // reset myForm when the form is closed
                 myForm.ShowDialog(this); // use ShowDialog instead of Show to ensure it is centered relative to the parent
             }
+
         }
 
 

@@ -20,9 +20,15 @@ namespace SBR.Forms
         {
             InitializeComponent();
 
-            lblText.Text = "Is your language missing here? Are you native speaker?\nDo you want to participate in this project?\nIf yes, please clik the link to get more information.\nThere are only few words in this project, so translation is matter of few minutes :)";
+            lblText.Text = "Is your language missing here? Are you a native speaker who wants to help?" +
+                           "\nClick the link below to find out how you can get involved." +
+                           "\nThere are only a few words to translate, so it will take you only a few minutes! :)";
 
-            llbLink.Text = "www.example.com";
+            llbLink.Text = "https://www.vt-soft.com/looking-for-translators";
+
+
+            pictureBox1.Image = SystemIcons.Question.ToBitmap();
+       
         }
 
         /// <summary>

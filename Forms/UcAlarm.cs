@@ -47,7 +47,7 @@ namespace SBR.Forms
 
         private SoundPlayer soundPlayer;
 
-        private string sTodayStats, sIgnoredBreaks, sTotalTime, sWorkingTime, sIdleTime, sPomodoroTitle, sPomodoroText;
+        private string sAlarmName, sTodayStats, sIgnoredBreaks, sTotalTime, sWorkingTime, sIdleTime, sPomodoroTitle, sPomodoroText;
 
         public UcAlarm()
         {
@@ -63,7 +63,7 @@ namespace SBR.Forms
         // ********************************************************************************************************************
 
         /// <summary>
-        /// Subscribe to the event from UcSettings.
+        /// Subscribe to events from UcSettings.
         /// </summary>
         /// <param name="settings"></param>
         public void SubscribeToEvents(UcSettings settings)
@@ -83,34 +83,37 @@ namespace SBR.Forms
 
             // List of strings which are in current User Control (Windows Form) and which we want to change to different language.
             // This method ChangeLanguage() in each User Control (Windows Form) and is called from LangChanger static class.
-            btnAlarmReset.Text = LangChanger.GetString("Reset alarm");
-            btnBreakYes.Text = LangChanger.GetString("Break YES");
-            btnBreakNo.Text = LangChanger.GetString("Break NO");
-            lblAverageStats.Text = LangChanger.GetString("Average stats:");
 
-            lblIgnoredBreaks.Text = LangChanger.GetString("Ignored breaks") + ":";
-            lblWorkingTime.Text = LangChanger.GetString("Working time") + ":";
+            sAlarmName = LangManager.GetString("alarm_name");
+           
+            btnAlarmReset.Text = LangManager.GetString("reset_alarm");
+            btnBreakYes.Text = LangManager.GetString("break_yes");
+            btnBreakNo.Text = LangManager.GetString("break_no");
+            lblAverageStats.Text = LangManager.GetString("average_stats");
 
-            sTodayStats = LangChanger.GetString("Today's stats:");
-            sIgnoredBreaks = LangChanger.GetString("Ignored breaks");
-            sTotalTime = LangChanger.GetString("Total time");
-            sWorkingTime = LangChanger.GetString("Working time");
-            sIdleTime = LangChanger.GetString("Idle time");
+            lblIgnoredBreaks.Text = LangManager.GetString("ignored_breaks") + ":";
+            lblWorkingTime.Text = LangManager.GetString("working_time") + ":";
 
-            sPomodoroTitle = LangChanger.GetString("Pomodoro 4/4");
-            sPomodoroText = LangChanger.GetString("Pomodoro 4/4. Take a long break.");
+            sTodayStats = LangManager.GetString("today_stats");
+            sIgnoredBreaks = LangManager.GetString("ignored_breaks");
+            sTotalTime = LangManager.GetString("total_time");
+            sWorkingTime = LangManager.GetString("working_time");
+            sIdleTime = LangManager.GetString("idle_time");
 
-            tipAverageStats.SetToolTip(lblAverageStats, LangChanger.GetString("Daily averages for the last 10 days. Except today."));
+            sPomodoroTitle = LangManager.GetString("pomodoro");
+            sPomodoroText = LangManager.GetString("pomodoro4");
+
+            tipAverageStats.SetToolTip(lblAverageStats, LangManager.GetString("daily_avg"));
 
             // Chart strings:
             chartAlarm.Series["Ignored breaks"].LegendText = sIgnoredBreaks;
             chartAlarm.Series["Total time"].LegendText = sTotalTime;
             chartAlarm.Series["Working time"].LegendText = sWorkingTime;
-            chartAlarm.ChartAreas["ChartArea1"].AxisY.Title = LangChanger.GetString("Ignored breaks [-]");
-            chartAlarm.ChartAreas["ChartArea1"].AxisY2.Title = LangChanger.GetString("Working time, total time [hours]");
+            chartAlarm.ChartAreas["ChartArea1"].AxisY.Title = LangManager.GetString("chart_left_axis");
+            chartAlarm.ChartAreas["ChartArea1"].AxisY2.Title = LangManager.GetString("chart_right_axis");
 
 
-
+            AdjustAndRunAlarm();
         }
 
 
@@ -125,7 +128,6 @@ namespace SBR.Forms
             tmrMainTimer.Enabled = true;
 
             myAlarm = new Alarm();
-            AdjustAndRunAlarm();
 
             SetButtonsAlarmOff();
             CheckPomodoro();
@@ -206,20 +208,21 @@ namespace SBR.Forms
         {
             if (selectedAlarm == 1)
             {
-                btnAlarmType.Text = "A1";
+                btnAlarmType.Text = sAlarmName+"1";
                 alarmTimeSec = MainForm.MainFormInstance.cData.AlarmTime1 * 60;
                 MainForm.MainFormInstance.cData.SelectedAlarm = 1;
             }
             if (selectedAlarm == 2)
             {
-                // In case Alarm2 is not set (AlarmTime=0), we will skip it and will go to the next alarm. Same for Alarm3 and Alarm4.
+                // In case Alarm2 is not set (AlarmTime=0), we will skip it and will go to the next alarm.
+                // Same for Alarm3 and Alarm4.
                 if (MainForm.MainFormInstance.cData.AlarmTime2 == 0)
                 {
                     selectedAlarm++;
                 }
                 else
                 {
-                    btnAlarmType.Text = "A2";
+                    btnAlarmType.Text = sAlarmName+"2";
                     alarmTimeSec = MainForm.MainFormInstance.cData.AlarmTime2 * 60;
                     MainForm.MainFormInstance.cData.SelectedAlarm = 2;
                 }
@@ -232,7 +235,7 @@ namespace SBR.Forms
                 }
                 else
                 {
-                    btnAlarmType.Text = "A3";
+                    btnAlarmType.Text = sAlarmName+"3";
                     alarmTimeSec = MainForm.MainFormInstance.cData.AlarmTime3 * 60;
                     MainForm.MainFormInstance.cData.SelectedAlarm = 3;
                 }
@@ -242,13 +245,13 @@ namespace SBR.Forms
                 if (MainForm.MainFormInstance.cData.AlarmTime4 == 0)
                 {
                     selectedAlarm = 1;
-                    btnAlarmType.Text = "A1";
+                    btnAlarmType.Text = sAlarmName+"1";
                     alarmTimeSec = MainForm.MainFormInstance.cData.AlarmTime1 * 60;
                     MainForm.MainFormInstance.cData.SelectedAlarm = 1;
                 }
                 else
                 {
-                    btnAlarmType.Text = "A4";
+                    btnAlarmType.Text = sAlarmName+"4";
                     alarmTimeSec = MainForm.MainFormInstance.cData.AlarmTime4 * 60;
                     MainForm.MainFormInstance.cData.SelectedAlarm = 4;
                 }
@@ -256,7 +259,8 @@ namespace SBR.Forms
             myAlarm.AlarmTimeSec = alarmTimeSec;
             myAlarm.Restart();
 
-            // Becasue this timer is called every 1 sec, we need to run it manually now, otherwise there will be almost 1 sec delay when changing alarm type (A1-A4)
+            // Becasue this timer is called every 1 sec, we need to run it manually now,
+            // otherwise there will be almost 1 sec delay when changing alarm type (A1-A4)
             if (myAlarm != null && myAlarmTotalTime != null)
             {
                 TmrMainTimer_Tick(null, EventArgs.Empty);
@@ -330,7 +334,8 @@ namespace SBR.Forms
             MidnightDetection();
             if (myAlarmTotalTime.ElapsedSec > 5) UpdateAndShowTodaysStats();
 
-            // There is no need to run this method so often, however because to ensure the color of emtoticon is updated correctly we have not other choice here :(
+            // There is no need to run this method so often, however because to ensure the color of
+            // emtoticon is updated correctly we have not other choice here :(
             UpdateAndShowAverageStats();
         }
 
@@ -425,22 +430,16 @@ namespace SBR.Forms
                 if (!idleTimeOn && SBR.IdleTimeDetection.GetIdleTime() > idleTimeLimit)
                 {
 
-                    Debug.Print(DateTime.Now.ToString() + "   I1: Idle time start: " + SBR.IdleTimeDetection.GetIdleTime());
-
                     // Time difference between the current time and the midnight time.
                     TimeSpan timeDifference = DateTime.Now - new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
-                    Debug.Print("Time difference: " + timeDifference.ToString());
-                    Debug.Print("Time difference: " + timeDifference.TotalSeconds);
 
                     if (timeDifference.TotalMinutes <= 10)
                     {
                         myAlarmIdleTime.Offset += (int)timeDifference.TotalSeconds;
-                        Debug.Print("Pod deset minut");
                     }
                     else
                     {
                         myAlarmIdleTime.Offset += idleTimeLimit;
-                        Debug.Print("Nad deset minut");
                     }
 
                     myAlarmIdleTime.Start();
@@ -458,7 +457,6 @@ namespace SBR.Forms
                 {
                     idleTimeOn = false;
                     myAlarmIdleTime.Stop();
-                    Debug.Print(DateTime.Now.ToString() + "   I2: Idle time stop:   " + SBR.IdleTimeDetection.GetIdleTime());
                 }
             }
         }
@@ -480,8 +478,6 @@ namespace SBR.Forms
                 myAlarmTotalTime.Stop();
                 myAlarmIdleTime.Stop(); // Just in case IdleTime is already counting.
 
-                Debug.Print(DateTime.Now.ToString() + "   S1: PC is going to sleep");
-                Debug.Print(DateTime.Now.ToString() + "   S1: Idle time:" + SBR.IdleTimeDetection.GetIdleTime());
             }
             else if (e.Mode == PowerModes.Resume) // PC is resuming from sleep mode.
             {
@@ -494,13 +490,7 @@ namespace SBR.Forms
                 if (osSuspendedStartTime.Date != osSuspendedEndTime.Date) // PC was sleeping thru midnight
                 {
                     SaveAndLoadData();
-                    Debug.Print("S2: PC was sleeping for more than 24 hours. Data will be saved and loaded again.");
-                    Debug.Print("S2: sStartTime: " + osSuspendedStartTime.ToString() + "  sEndTime: " + osSuspendedEndTime.ToString());
                 }
-
-                Debug.Print(DateTime.Now.ToString() + "   S2: PC has resumed from sleep: ");
-                Debug.Print(DateTime.Now.ToString() + "   S2: PC was sleeping for: " + sleepDuration.ToString(@"mm\:ss") + " (mm:ss)");
-                Debug.Print(DateTime.Now.ToString() + "   S2: Idle time:" + SBR.IdleTimeDetection.GetIdleTime());
 
                 myAlarmTotalTime.Start();
                 myAlarm.Restart();
@@ -522,7 +512,6 @@ namespace SBR.Forms
             // Midnight is detected.
             if (!isMidnight && DateTime.Now.Hour == 0 && DateTime.Now.Minute == 0)
             {
-                Debug.Print(DateTime.Now.ToString() + "   MidnightDetection()---------------------");
                 isMidnight = true;
                 SaveAndLoadData();
 
@@ -540,13 +529,11 @@ namespace SBR.Forms
         private void SaveAndLoadData()
         {
 
-            Debug.Print(DateTime.Now.ToString() + "   SaveAndLoadData() - IdleTimeAlarm Status: " + myAlarmIdleTime.IsRunning);
-
             // FileSave method  will also run UpdateMonthlyChartData mehtod. So data for the monthly chart will be updated.
-            JsonMethods.FileSaveConfig(MainForm.MainFormInstance.cData);
+            ConfigManager.SaveJsonConfigFile(MainForm.MainFormInstance.cData);
 
             // Loading the json file again will adjust the correct day date.
-            MainForm.MainFormInstance.cData = JsonMethods.FileLoadConfig();
+            MainForm.MainFormInstance.cData = ConfigManager.LoadJsonConfigFile();
 
             // Reset/restart the alarms:
             myAlarmIdleTime.Offset = 0;
@@ -571,7 +558,6 @@ namespace SBR.Forms
             if (idleTimeOn) // If  idleTimeOn=true then workingTimeLabel will be not updated in UpdateAndShowTtWtIt(), so we have to "reset" it here.
             {
                 workingTimeLabel = "00:00:00";
-                Debug.Print(DateTime.Now.ToString() + "   Reseting WT to 00:00:00");
             }
 
         }
@@ -756,21 +742,26 @@ namespace SBR.Forms
                     break;
             }
 
-            // Set the working directory to the application's directory
-            //string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+      
+            string appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string fileNameWithPath = Path.Combine(appDirectory, fileName);
 
-            //MessageBox.Show(appDirectory+fileName);
+            if (File.Exists(fileNameWithPath))
+            {
+                soundPlayer = new SoundPlayer(fileNameWithPath);
+                soundPlayer.Play();
+            }
 
-
-            soundPlayer = new SoundPlayer(fileName);
-            soundPlayer.Play();
             btnSoundOff.Enabled = true;
             tmrDisableSoundButton.Enabled = true;
         }
 
         private void StopSound()
         {
-            soundPlayer.Stop();
+            if (soundPlayer != null)
+            {
+                soundPlayer.Stop();
+            }
             btnSoundOff.Enabled = false;
         }
 
@@ -815,34 +806,46 @@ namespace SBR.Forms
 
         private void BringMainWindowToFront()
         {
+            var main = MainForm.MainFormInstance;
+            if (main == null) return;
 
-            // Windows has restrictions to prevent applications from stealing focus from the currently active window.
-            // These restrictions are enforced more strictly when running the application outside of a debugger!!!
-
-            // Click on the btnAlarm button in the main form
-            MainForm.MainFormInstance.btnAlarm.PerformClick();
-
-            // Activate the application window
-            MainForm.MainFormInstance.WindowState = FormWindowState.Minimized;
-            MainForm.MainFormInstance.Activate();
-            MainForm.MainFormInstance.WindowState = FormWindowState.Normal;
-
-            // The next code is here just in case previous 3 line of code do not work:
-
-            // Fallback mechanism to ensure the window is brought to the foreground
-            IntPtr mainWindowHandle = MainForm.MainFormInstance.Handle;
-
-            // Check if the window is already in the foreground
-            IntPtr foregroundWindow = GetForegroundWindow();
-            if (foregroundWindow != mainWindowHandle)
+            bool previousShowInTaskbar = main.ShowInTaskbar;
+            try
             {
-                // Attempt to set the window to the foreground
-                if (!SetForegroundWindow(mainWindowHandle))
+                // Only force taskbar visibility when app uses system tray or tray icon is hidden.
+                if (main.cData?.SystemTray == true)
+                    main.ShowInTaskbar = true;
+
+                if (!main.Visible) main.Show();
+                main.btnAlarm.PerformClick();
+
+                if (main.WindowState == FormWindowState.Minimized)
+                    main.WindowState = FormWindowState.Normal;
+
+                main.BringToFront();
+                main.Activate();
+
+                bool oldTopMost = main.TopMost;
+                main.TopMost = true;
+                Application.DoEvents();
+                main.TopMost = oldTopMost;
+
+                IntPtr mainWindowHandle = main.Handle;
+                IntPtr foregroundWindow = GetForegroundWindow();
+                if (foregroundWindow != mainWindowHandle)
                 {
-                    // Fallback: Force the window to the top of the Z-order
-                    SetWindowPos(mainWindowHandle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
-                    SetWindowPos(mainWindowHandle, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+                    if (!SetForegroundWindow(mainWindowHandle))
+                    {
+                        SetWindowPos(mainWindowHandle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+                        SetWindowPos(mainWindowHandle, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
+                    }
                 }
+            }
+            catch { }
+            finally
+            {
+                // Restore original taskbar visibility (preserve user setting)
+                main.ShowInTaskbar = previousShowInTaskbar;
             }
         }
 
@@ -1094,6 +1097,12 @@ namespace SBR.Forms
 
             // Set x-axis label format
             chartAlarm.ChartAreas["ChartArea1"].AxisX.LabelStyle.Format = "MM-dd";
+
+            // Set axes text font size
+            chartAlarm.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Arial", 9, FontStyle.Regular);
+            chartAlarm.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Arial", 9, FontStyle.Regular);
+            chartAlarm.ChartAreas["ChartArea1"].AxisY2.TitleFont = new Font("Arial", 9, FontStyle.Regular);
+
         }
 
         private void AlarmChartUpdate()

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<apps>
+
+
+
+    <app id="03">
+        <title>SAC - Simple Analog Clock</title>
+        <url>https://www.vt-soft.com/sac-simple-analog-clock</url>
+        <description>World time analog clocks for your desktop. Application for people working with colleagues from different time zones.</description>
+        <screenshotName>apps_screenshots_sac2</screenshotName>
+    </app>
+
+</apps>

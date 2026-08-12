@@ -1,0 +1,272 @@
+[
+  {
+    "formName": "leftMenu",
+    "id": "alarm",
+    "source_string": "Alarm",
+    "translated_string": "Alarm"
+  },
+  {
+    "formName": "leftMenu",
+    "id": "settings",
+    "source_string": "Settings",
+    "translated_string": "Settings"
+  },
+  {
+    "formName": "leftMenu",
+    "id": "statistics",
+    "source_string": "Statistics",
+    "translated_string": "Statistics"
+  },
+  {
+    "formName": "leftMenu",
+    "id": "language",
+    "source_string": "Language",
+    "translated_string": "Language"
+  },
+  {
+    "formName": "leftMenu",
+    "id": "about",
+    "source_string": "About",
+    "translated_string": "About"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "alarm_name",
+    "source_string": "A",
+    "translated_string": "A"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "reset_alarm",
+    "source_string": "Reset alarm",
+    "translated_string": "Reset alarm"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "break_yes",
+    "source_string": "Yes, took a break",
+    "translated_string": "Yes, took a break"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "break_no",
+    "source_string": "No, skipped a break",
+    "translated_string": "No, skipped a break"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "average_stats",
+    "source_string": "Average statistics:",
+    "translated_string": "Average statistics:"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "ignored_breaks",
+    "source_string": "Ignored breaks",
+    "translated_string": "Ignored breaks"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "working_time",
+    "source_string": "Working time",
+    "translated_string": "Working time"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "today_stats",
+    "source_string": "Today's statistics:",
+    "translated_string": "Today's statistics:"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "total_time",
+    "source_string": "Total time",
+    "translated_string": "Total time"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "idle_time",
+    "source_string": "Idle time",
+    "translated_string": "Idle time"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "pomodoro",
+    "source_string": "Pomodoro 4/4",
+    "translated_string": "Pomodoro 4/4"
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "pomodoro4",
+    "source_string": "Pomodoro 4/4. Take a long break.",
+    "translated_string": "Pomodoro 4/4. Take a long break."
+  },
+  {
+    "formName": "AlarmForm",
+    "id": "daily_avg",
+    "source_string": "Daily averages for the last 10 days, excluding today.",
+    "translated_string": "Daily averages for the last 10 days, excluding today."
+  },
+  {
+    "formName": "AlarmForm_chart",
+    "id": "chart_right_axis",
+    "source_string": "Working time, total time [hours]",
+    "translated_string": "Working time, total time [hours]"
+  },
+  {
+    "formName": "AlarmForm_chart",
+    "id": "chart_left_axis",
+    "source_string": "Ignored breaks [-]",
+    "translated_string": "Ignored breaks [-]"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "alarm1",
+    "source_string": "Alarm 1 interval [min]:",
+    "translated_string": "Alarm 1 interval [min]:"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "alarm2",
+    "source_string": "Alarm 2 interval [min]:",
+    "translated_string": "Alarm 2 interval [min]:"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "alarm3",
+    "source_string": "Alarm 3 interval [min]:",
+    "translated_string": "Alarm 3 interval [min]:"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "alarm4",
+    "source_string": "Alarm 4 interval [min]:",
+    "translated_string": "Alarm 4 interval [min]:"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "run_startup",
+    "source_string": "Run at startup",
+    "translated_string": "Run at startup"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "alarm_sound",
+    "source_string": "Alarm sound",
+    "translated_string": "Alarm sound"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "emoticons",
+    "source_string": "Emoticons",
+    "translated_string": "Emoticons"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "pomodoro_set",
+    "source_string": "Pomodoro 4/4",
+    "translated_string": "Pomodoro 4/4"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "extra_alert",
+    "source_string": "Extra alert for long break",
+    "translated_string": "Extra alert for long break"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "red",
+    "source_string": "Red",
+    "translated_string": "Red"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "orange",
+    "source_string": "Orange",
+    "translated_string": "Orange"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "yellow",
+    "source_string": "Yellow",
+    "translated_string": "Yellow"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "green",
+    "source_string": "Green",
+    "translated_string": "Green"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "blue",
+    "source_string": "Blue",
+    "translated_string": "Blue"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "pink",
+    "source_string": "Pink",
+    "translated_string": "Pink"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "purple",
+    "source_string": "Purple",
+    "translated_string": "Purple"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "grey",
+    "source_string": "Grey",
+    "translated_string": "Grey"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "random_colour",
+    "source_string": "Random colour",
+    "translated_string": "Random colour"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "custom_colour",
+    "source_string": "Custom colour",
+    "translated_string": "Custom colour"
+  },
+  {
+    "formName": "SettingsForm",
+    "id": "system_tray",
+    "source_string": "Show app icon in system tray",
+    "translated_string": "Show app icon in system tray"
+  },
+  {
+    "formName": "StatisticsForm",
+    "id": "monthly_avg",
+    "source_string": "Daily averages for the last 14 months:",
+    "translated_string": "Daily averages for the last 14 months:"
+  },
+  {
+    "formName": "TranslationForm",
+    "id": "select_lang",
+    "source_string": "Select your language:",
+    "translated_string": "Select your language:"
+  },
+  {
+    "formName": "TranslationForm",
+    "id": "credits",
+    "source_string": "Credits:",
+    "translated_string": "Credits:"
+  },
+  {
+    "formName": "AboutForm",
+    "id": "free_apps",
+    "source_string": "Also check out these free apps:",
+    "translated_string": "Also check out these free apps:"
+  },
+  {
+    "formName": "AboutForm",
+    "id": "about_html",
+    "source_string": "<strong>SBR - Simple Break Reminder, v1.0.1. | vt-soft (c) 2025 - 2026</strong><br><br>An application that tracks the time you spend using your computer and is reminding you to take a break. This application is free for any personal or commercial use.<br><br>For more information about this app and to download latest version please go to:<br><a href='www.vt-soft.com/sbr-simple-break-reminder'>www.vt-soft.com/sbr-simple-break-reminder</a><br><br>Distributed under <a href='https://www.vt-soft.com/sbr-simple-break-reminder-license'>MIT License.</a><br><hr><br>Credits:<br><br>Icons/flags:  <a href='https://icons8.com/'>https://icons8.com/</a><br><br>Sounds:  <a href='https://mixkit.co/'>https://mixkit.co/</a>",
+    "translated_string": "<strong>SBR - Simple Break Reminder, v1.0.1. | vt-soft (c) 2025 - 2026</strong><br><br>An application that tracks the time you spend using your computer and is reminding you to take a break. This application is free for any personal or commercial use.<br><br>For more information about this app and to download latest version please go to:<br><a href='www.vt-soft.com/sbr-simple-break-reminder'>www.vt-soft.com/sbr-simple-break-reminder</a><br><br>Distributed under <a href='https://www.vt-soft.com/sbr-simple-break-reminder-license'>MIT License.</a><br><hr><br>Credits:<br><br>Icons/flags:  <a href='https://icons8.com/'>https://icons8.com/</a><br><br>Sounds:  <a href='https://mixkit.co/'>https://mixkit.co/</a>"
+  }
+]

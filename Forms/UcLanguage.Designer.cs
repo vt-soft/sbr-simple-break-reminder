@@ -46,7 +46,7 @@
             cboLanguages.BackColor = Color.White;
             cboLanguages.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
             cboLanguages.FormattingEnabled = true;
-            cboLanguages.Location = new Point(161, 60);
+            cboLanguages.Location = new Point(168, 60);
             cboLanguages.Name = "cboLanguages";
             cboLanguages.Size = new Size(225, 24);
             cboLanguages.TabIndex = 1;
@@ -69,10 +69,10 @@
             // 
             // picFlag
             // 
-            picFlag.Image = ResourcesFlagsDir.ResourcesFlags.cs_cz;
+            picFlag.Image = ResourcesFlagsDir.ResourcesFlags.en_gb;
             picFlag.Location = new Point(30, 30);
             picFlag.Name = "picFlag";
-            picFlag.Size = new Size(112, 71);
+            picFlag.Size = new Size(135, 70);
             picFlag.TabIndex = 5;
             picFlag.TabStop = false;
             // 
@@ -80,14 +80,13 @@
             // 
             pnlTableLang.AutoScroll = true;
             pnlTableLang.BackColor = Color.Transparent;
-            pnlTableLang.ColumnCount = 3;
-            pnlTableLang.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 70F));
-            pnlTableLang.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 300F));
-            pnlTableLang.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 250F));
+            pnlTableLang.ColumnCount = 2;
+            pnlTableLang.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 90F));
+            pnlTableLang.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
             pnlTableLang.Location = new Point(30, 170);
             pnlTableLang.Name = "pnlTableLang";
             pnlTableLang.RowCount = 1;
-            pnlTableLang.RowStyles.Add(new RowStyle(SizeType.Absolute, 43F));
+            pnlTableLang.RowStyles.Add(new RowStyle());
             pnlTableLang.Size = new Size(773, 66);
             pnlTableLang.TabIndex = 8;
             // 
@@ -105,7 +104,7 @@
             // 
             lblSelectLanguage.AutoSize = true;
             lblSelectLanguage.Font = new Font("Segoe UI", 9.75F);
-            lblSelectLanguage.Location = new Point(161, 32);
+            lblSelectLanguage.Location = new Point(168, 32);
             lblSelectLanguage.Name = "lblSelectLanguage";
             lblSelectLanguage.Size = new Size(138, 17);
             lblSelectLanguage.TabIndex = 11;
@@ -144,7 +143,6 @@
             Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
             Name = "UcLanguage";
             Size = new Size(824, 509);
-            Load += UcLanguage_Load;
             ((System.ComponentModel.ISupportInitialize)picFlag).EndInit();
             ResumeLayout(false);
             PerformLayout();

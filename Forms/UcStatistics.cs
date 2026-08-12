@@ -37,14 +37,15 @@ namespace SBR.Forms
 
             // List of strings which are in current User Control (Windows Form) and which we want to change to different language.
             // There is such method in each User Control (Windows Form) which is called from LangChanger static class.
-            lblStats.Text = LangChanger.GetString("Daily averages for the last 14 months:");
 
-            chartMonths.Series["Total time"].LegendText = LangChanger.GetString("Total time");
-            chartMonths.Series["Working time"].LegendText = LangChanger.GetString("Working time");
-            chartMonths.Series["Ignored breaks"].LegendText = LangChanger.GetString("Ignored breaks");
+            lblStats.Text = LangManager.GetString("monthly_avg");
 
-            chartMonths.ChartAreas["ChartArea1"].AxisY.Title = LangChanger.GetString("Ignored breaks [-]");
-            chartMonths.ChartAreas["ChartArea1"].AxisY2.Title = LangChanger.GetString("Working time, total time [hours]");
+            chartMonths.Series["Total time"].LegendText = LangManager.GetString("total_time");
+            chartMonths.Series["Working time"].LegendText = LangManager.GetString("working_time");
+            chartMonths.Series["Ignored breaks"].LegendText = LangManager.GetString("ignored_breaks");
+
+            chartMonths.ChartAreas["ChartArea1"].AxisY.Title = LangManager.GetString("chart_left_axis");
+            chartMonths.ChartAreas["ChartArea1"].AxisY2.Title = LangManager.GetString("chart_right_axis");
         }
 
 
@@ -103,6 +104,16 @@ namespace SBR.Forms
             chartMonths.Series["Ignored breaks"].LegendText = "***Ignored Breaks";
             chartMonths.Series["Total time"].LegendText = "***Total Time";
             chartMonths.Series["Working time"].LegendText = "***Working Time";
+
+            // Set axes text font size
+            chartMonths.ChartAreas["ChartArea1"].AxisX.TitleFont = new Font("Arial", 9, FontStyle.Regular);
+            chartMonths.ChartAreas["ChartArea1"].AxisY.TitleFont = new Font("Arial", 9, FontStyle.Regular);
+            chartMonths.ChartAreas["ChartArea1"].AxisY2.TitleFont = new Font("Arial", 9, FontStyle.Regular);
+
+
+
+
+
 
 
         }

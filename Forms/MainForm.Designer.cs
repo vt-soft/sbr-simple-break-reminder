@@ -31,7 +31,6 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             pnlMenu = new Panel();
-            btnToDo = new Button();
             btnChangeDayMode = new Button();
             pnlVerticalStrip2 = new Panel();
             pnlVerticalStrip = new Panel();
@@ -44,13 +43,14 @@
             pnlHorizontalStrip = new Panel();
             pnlFormLoader = new Panel();
             tmrSaveData = new System.Windows.Forms.Timer(components);
+            tmrUserLogged = new System.Windows.Forms.Timer(components);
+            notifyIconTray = new NotifyIcon(components);
             pnlMenu.SuspendLayout();
             SuspendLayout();
             // 
             // pnlMenu
             // 
             pnlMenu.BackColor = Color.FromArgb(41, 39, 40);
-            pnlMenu.Controls.Add(btnToDo);
             pnlMenu.Controls.Add(btnChangeDayMode);
             pnlMenu.Controls.Add(pnlVerticalStrip2);
             pnlMenu.Controls.Add(pnlVerticalStrip);
@@ -65,27 +65,6 @@
             pnlMenu.Name = "pnlMenu";
             pnlMenu.Size = new Size(183, 516);
             pnlMenu.TabIndex = 0;
-            // 
-            // btnToDo
-            // 
-            btnToDo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            btnToDo.FlatAppearance.BorderSize = 0;
-            btnToDo.FlatStyle = FlatStyle.Flat;
-            btnToDo.Font = new Font("Nirmala UI", 12.75F);
-            btnToDo.ForeColor = Color.White;
-            btnToDo.Image = ResourcesIconsDir.ResourcesIcons.tasklist_icon;
-            btnToDo.ImageAlign = ContentAlignment.MiddleLeft;
-            btnToDo.Location = new Point(12, 127);
-            btnToDo.Name = "btnToDo";
-            btnToDo.Size = new Size(173, 45);
-            btnToDo.TabIndex = 10;
-            btnToDo.Text = "*** ToDo (16)";
-            btnToDo.TextAlign = ContentAlignment.MiddleLeft;
-            btnToDo.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btnToDo.UseVisualStyleBackColor = true;
-            btnToDo.Click += NavBarButton_Click;
-            btnToDo.MouseEnter += NavBarButton_MouseEnter;
-            btnToDo.MouseLeave += NavBarButton_MouseLeave;
             // 
             // btnChangeDayMode
             // 
@@ -129,7 +108,7 @@
             btnAbout.ForeColor = Color.White;
             btnAbout.Image = ResourcesIconsDir.ResourcesIcons.about_icon;
             btnAbout.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAbout.Location = new Point(12, 307);
+            btnAbout.Location = new Point(12, 262);
             btnAbout.Name = "btnAbout";
             btnAbout.Size = new Size(173, 45);
             btnAbout.TabIndex = 6;
@@ -150,7 +129,7 @@
             btnLanguage.ForeColor = Color.White;
             btnLanguage.Image = ResourcesIconsDir.ResourcesIcons.language_icon2;
             btnLanguage.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLanguage.Location = new Point(12, 262);
+            btnLanguage.Location = new Point(12, 217);
             btnLanguage.Name = "btnLanguage";
             btnLanguage.Size = new Size(173, 45);
             btnLanguage.TabIndex = 5;
@@ -171,7 +150,7 @@
             btnStatistics.ForeColor = Color.White;
             btnStatistics.Image = ResourcesIconsDir.ResourcesIcons.chart_icon;
             btnStatistics.ImageAlign = ContentAlignment.MiddleLeft;
-            btnStatistics.Location = new Point(12, 217);
+            btnStatistics.Location = new Point(12, 172);
             btnStatistics.Name = "btnStatistics";
             btnStatistics.Size = new Size(173, 45);
             btnStatistics.TabIndex = 4;
@@ -192,7 +171,7 @@
             btnSettings.ForeColor = Color.White;
             btnSettings.Image = ResourcesIconsDir.ResourcesIcons.settings_icon;
             btnSettings.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSettings.Location = new Point(12, 172);
+            btnSettings.Location = new Point(12, 127);
             btnSettings.Name = "btnSettings";
             btnSettings.Size = new Size(173, 45);
             btnSettings.TabIndex = 3;
@@ -257,6 +236,13 @@
             tmrSaveData.Interval = 600000;
             tmrSaveData.Tick += tmrSaveData_Tick;
             // 
+            // notifyIconTray
+            // 
+            notifyIconTray.Icon = (Icon)resources.GetObject("notifyIconTray.Icon");
+            notifyIconTray.Text = "SBR - Simple Break Reminder";
+            notifyIconTray.Visible = true;
+            notifyIconTray.MouseClick += notifyIconTray_MouseClick;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -293,7 +279,8 @@
         public Button btnStatistics;
         public Button btnSettings;
         public Button btnAlarm;
-        public Button btnToDo;
+        private System.Windows.Forms.Timer tmrUserLogged;
+        public NotifyIcon notifyIconTray;
     }
 
 }
