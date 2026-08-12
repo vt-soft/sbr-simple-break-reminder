@@ -9,10 +9,10 @@ Using the application is very intuitive. For more information please visit: http
 
 ## Screenshots
 <img width="1000" height="540" alt="sbr-simple-break-reminder-01" src="https://github.com/user-attachments/assets/6e1d9429-2d0c-4016-b827-bef85ac98796" />
-  
+<br><br>
    
 <img width="1000" height="540" alt="sbr-simple-break-reminder-03" src="https://github.com/user-attachments/assets/6f1ce419-be9b-4bd9-92c6-445c1c275d1e" />
-  
+<br><br>
   
 <img width="1000" height="540" alt="sbr-simple-break-reminder-04" src="https://github.com/user-attachments/assets/303173bd-beb2-4cc5-95a1-806c78a6024c" />
 
